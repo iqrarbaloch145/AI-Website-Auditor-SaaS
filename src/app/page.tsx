@@ -19,16 +19,24 @@ import {
   Check,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuditStore } from "@/store/useAuditStore";
 
 export default function LandingPage() {
   const [urlInput, setUrlInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const router = useRouter();
+  const { isLoggedIn } = useAuditStore();
 
   const handleQuickScan = (e: React.FormEvent) => {
     e.preventDefault();
     if (!urlInput.trim()) return;
+
+    if (!isLoggedIn) {
+      router.push(`/signup?url=${encodeURIComponent(urlInput)}`);
+      return;
+    }
+
     setLoading(true);
     router.push(`/dashboard/scanner?url=${encodeURIComponent(urlInput)}`);
   };

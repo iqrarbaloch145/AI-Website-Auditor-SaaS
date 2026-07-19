@@ -40,8 +40,8 @@ interface AuditStore {
 export const useAuditStore = create<AuditStore>()(
   persist(
     (set) => ({
-      user: { name: "Pro Developer", email: "user@websiteauditor.ai" },
-      isLoggedIn: true,
+      user: null,
+      isLoggedIn: false,
       activeScan: null,
       scanHistory: [],
       isScanning: false,
