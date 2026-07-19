@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Search,
@@ -17,12 +17,16 @@ import {
   Download,
   Settings,
   Bot,
+  Trash2,
+  LogOut,
+  User,
 } from "lucide-react";
 import { useAuditStore } from "@/store/useAuditStore";
 
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
-  const { activeScan, setIsChatOpen } = useAuditStore();
+  const router = useRouter();
+  const { activeScan, setIsChatOpen, deleteActiveScan, user, isLoggedIn, logout } = useAuditStore();
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -38,6 +42,11 @@ export const Sidebar: React.FC = () => {
     { name: "Export Reports", href: "/dashboard/reports", icon: Download },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <aside className="w-64 border-r border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl p-4 flex flex-col justify-between shrink-0 min-h-[calc(100vh-4rem)]">
@@ -72,9 +81,18 @@ export const Sidebar: React.FC = () => {
         {/* Active Scan Box */}
         {activeScan && (
           <div className="p-3.5 rounded-2xl border border-blue-500/20 bg-blue-500/5 dark:bg-blue-500/10">
-            <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider block">
-              Active Audit Context
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider block">
+                Active Website
+              </span>
+              <button
+                onClick={deleteActiveScan}
+                title="Delete website audit from dashboard"
+                className="p-1 rounded text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
             <p className="text-xs font-semibold text-slate-900 dark:text-white truncate mt-1">
               {activeScan.title || activeScan.url}
             </p>
@@ -93,8 +111,31 @@ export const Sidebar: React.FC = () => {
         )}
       </div>
 
-      <div className="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 text-center">
-        AI Website Auditor v1.0 &bull; Production Ready
+      <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+        {isLoggedIn && user && (
+          <div className="flex items-center justify-between p-2 rounded-xl bg-slate-100 dark:bg-slate-900">
+            <div className="flex items-center space-x-2 truncate pr-2">
+              <div className="p-1.5 rounded-lg bg-blue-600 text-white shrink-0">
+                <User className="w-3.5 h-3.5" />
+              </div>
+              <div className="truncate">
+                <span className="text-xs font-bold text-slate-900 dark:text-white block truncate">{user.name}</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block truncate">{user.email}</span>
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              title="Log Out"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors shrink-0"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        <div className="text-[11px] text-slate-400 text-center">
+          AI Website Auditor &bull; Session Active
+        </div>
       </div>
     </aside>
   );
