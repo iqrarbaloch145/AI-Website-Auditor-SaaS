@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ShieldCheck, Moon, Sun, Bot, LogIn, UserPlus, LayoutDashboard, User, LogOut } from "lucide-react";
@@ -10,6 +10,11 @@ export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { theme, toggleTheme, setIsChatOpen, activeScan, isLoggedIn, user, logout } = useAuditStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navLinks = [
     { name: "Scanner", href: "/dashboard/scanner" },
@@ -83,7 +88,7 @@ export const Navbar: React.FC = () => {
             {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
 
-          {isLoggedIn ? (
+          {mounted && isLoggedIn ? (
             <>
               {/* Dashboard Link */}
               <Link
@@ -106,7 +111,7 @@ export const Navbar: React.FC = () => {
                 title="Log Out"
                 className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-4 h-4 text-rose-500" />
               </button>
             </>
           ) : (
