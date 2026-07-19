@@ -15,9 +15,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Globe,
-  Bot,
   ChevronDown,
-  Code2,
   Check,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -117,7 +115,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-300 text-xs font-semibold mb-8 shadow-inner backdrop-blur-md"
+          className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-300 text-xs font-semibold mb-8 shadow-inner backdrop-blur-md"
         >
           <Sparkles className="w-4 h-4 text-amber-500 dark:text-amber-400 animate-pulse" />
           <span>Powered by Google Gemini 2.5 AI & Real-Time DOM Inspection</span>
@@ -494,17 +492,17 @@ export default function LandingPage() {
             return (
               <div
                 key={idx}
-                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/50 glass-panel overflow-hidden transition-colors"
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 shadow-md dark:shadow-none overflow-hidden transition-colors"
               >
                 <button
                   onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                   className="w-full p-5 text-left font-bold text-sm text-slate-900 dark:text-white flex items-center justify-between"
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-500 dark:text-slate-400 transition-transform ${isOpen ? "rotate-180 text-blue-600 dark:text-blue-400" : ""}`} />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+                  <div className="px-5 pb-5 text-xs text-slate-700 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/80 pt-4 bg-slate-50/80 dark:bg-slate-950/50">
                     {faq.a}
                   </div>
                 )}
