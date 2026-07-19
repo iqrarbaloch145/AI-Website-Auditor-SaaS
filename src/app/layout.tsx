@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${inter.className} min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white`}>
+      <body className={`${inter.className} min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-blue-600 selection:text-white transition-colors duration-200`}>
         <Navbar />
         <main>{children}</main>
         <AIFixModal />
